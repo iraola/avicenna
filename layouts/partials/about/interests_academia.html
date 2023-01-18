@@ -2,17 +2,46 @@
 
 {{ $aboutPage := .Site.GetPage $content_type }}
 
-{{ if or $aboutPage.Params.academia $aboutPage.Params.interests}}
-{{ if $aboutPage.Params.interests }}
-<div class="interests col ">
-    <h4 class="main_color">Interests</h4>
-    <ul>
-        {{range $aboutPage.Params.interests }}
-        <li>
-            {{.}}
-        </li>
-        {{end}}
-    </ul>
+{{ if or $aboutPage.Params.academia $aboutPage.Params.work}}
+{{ if $aboutPage.Params.work }}
+<div class="academia col ">
+    <h4 class="main_color">Work Experience</h4>
+    {{range $work := $aboutPage.Params.work}}
+    <div class="row">
+        <div class="course col">
+            <div class="institution_dates row">
+                <div class="institution col" id="institution_title">
+                    {{$work.course.institution}}
+                </div>
+                <div class="main_color dates col-md-auto  justify-content-end">
+                    {{$work.course.start_date}}
+                    {{ if $work.course.end_date }}
+                    - {{$work.course.end_date}}
+                    {{else}}
+                    - present
+                    {{end}}
+                </div>
+            </div>
+            <div class="degree_major row">
+                <div class="text-muted col">
+                    {{$work.course.degree}} {{$work.course.major}}
+
+                    {{if $work.course.minor }}
+                    , Minor: {{$work.course.minor}}
+                    {{end}}
+                </div>
+            </div>
+
+            {{if $work.course.other_info}}
+            <div class="other_info row text-muted">
+                <div class="col">
+                    {{$work.course.other_info}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
 </div>
 {{end}}
 
